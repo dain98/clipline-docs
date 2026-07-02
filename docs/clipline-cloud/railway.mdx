@@ -66,12 +66,12 @@ CLIPLINE_S3_BUCKET=<Bucket name>
 CLIPLINE_S3_REGION=<Bucket region>
 CLIPLINE_S3_ACCESS_KEY_ID=<Bucket access key>
 CLIPLINE_S3_SECRET_ACCESS_KEY=<Bucket secret key>
-CLIPLINE_PUBLIC_URL=https://${{RAILWAY_PUBLIC_DOMAIN}}
 CLIPLINE_SESSION_SECRET=<generated secret>
 ```
 
 Do not upload real clips until `CLIPLINE_DATABASE_URL` and the S3 variables are populated. The bucket
 can keep video files after a redeploy, but the library also needs the Postgres records to be durable.
+Railway handles the public URL wiring for the service, including custom domains.
 
 ## Connect the desktop app
 
@@ -91,14 +91,19 @@ Upload a test clip, then confirm:
 ## Custom domain
 
 Railway's generated domain is enough for testing. For a cleaner public install, attach a custom
-domain in Railway and then set:
+domain to the Clipline Cloud service in Railway:
 
-```env
-CLIPLINE_PUBLIC_URL=https://clips.example.com
-```
+1. Open the `dain98/clipline-cloud:latest` service in Railway.
+2. Go to **Settings > Networking > Custom Domain**.
+3. Add your domain and follow Railway's DNS instructions.
+4. Wait for Railway to show the custom domain as active.
+5. Open the `dain98/clipline-cloud:latest` service's deployments list.
+6. On the currently deployed row, open the three-dot menu on the right.
+7. Choose **Redeploy**.
 
-Redeploy after changing the variable. This URL is used for desktop client connections, share links,
-embeds, and callbacks, so it should match the public HTTPS address users actually open.
+You do not need to set a custom-domain environment variable. Railway provides the public domain
+information to the service; redeploying lets Clipline Cloud pick up the updated public address for
+desktop client connections, share links, embeds, and callbacks.
 
 ## Health checks
 
@@ -121,7 +126,7 @@ recent audit entries.
 |---------|-------|
 | The app starts, but clips disappear after redeploy | Confirm `CLIPLINE_DATABASE_URL` points at Railway Postgres, not SQLite. |
 | Uploads fail | Confirm the Bucket variables are present and `CLIPLINE_STORAGE_BACKEND=s3`. |
-| Share links use the wrong host | Set `CLIPLINE_PUBLIC_URL` to the final public HTTPS domain and redeploy. |
+| Share links use the wrong host | Confirm the custom domain is attached under **Settings > Networking > Custom Domain**, then redeploy the Clipline Cloud service. |
 | Desktop app cannot connect | Check `/readyz`, then confirm the desktop app is using the same public HTTPS URL. |
 | First login fails | Confirm the password entered during deploy, or redeploy/reset with a known owner password. |
 
