@@ -5,6 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Clipline',
   tagline: 'Documentation for Clipline',
+  favicon: 'img/clipline-mark.svg',
   url: 'https://dain98.github.io',
   baseUrl: '/clipline-docs/',
   organizationName: 'dain98',
