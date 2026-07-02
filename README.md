@@ -1,4 +1,4 @@
-# Clipline Docs
+# Clipline
 
 Documentation for Clipline, built with Docusaurus and deployed to GitHub Pages.
 

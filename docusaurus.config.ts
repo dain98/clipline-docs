@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Clipline Docs',
+  title: 'Clipline',
   tagline: 'Documentation for Clipline',
   url: 'https://dain98.github.io',
   baseUrl: '/clipline-docs/',
@@ -46,7 +46,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Clipline Docs',
+      title: 'Clipline',
       logo: {
         alt: 'Clipline mark',
         src: 'img/clipline-mark.svg',

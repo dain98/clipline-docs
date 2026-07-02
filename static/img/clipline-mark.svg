@@ -1,6 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
   <title id="title">Clipline</title>
-  <rect width="64" height="64" rx="14" fill="#111827"/>
-  <path d="M16 36c8 0 8-12 16-12s8 12 16 12" fill="none" stroke="#7dd3fc" stroke-width="6" stroke-linecap="round"/>
-  <path d="M16 44h32" fill="none" stroke="#a7f3d0" stroke-width="6" stroke-linecap="round"/>
+  <rect width="256" height="256" rx="54" fill="#0f1724"/>
+  <rect x="17" y="17" width="222" height="222" rx="41" fill="#172236" stroke="#3b82f6" stroke-width="10"/>
+  <g transform="translate(128 128) scale(0.88) translate(-128 -128)">
+    <path d="M101 82H76c-14 0-25 11-25 25v42c0 14 11 25 25 25h25" fill="none" stroke="#8bbcff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M135 82v92h58" fill="none" stroke="#8bbcff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 </svg>
