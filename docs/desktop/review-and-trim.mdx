@@ -1,0 +1,66 @@
+---
+title: Review, Trim, and Export
+sidebar_position: 4
+slug: /desktop/review-and-trim
+---
+
+The review player is built for fast local clip review: keyboard playback, timeline markers, a
+navigator, audio track selection, simple trimming, and instant keyframe-aligned export.
+
+## Open a clip
+
+Select a clip from the Library. Local clips open directly. Cloud-only clips can be cached locally
+when you are connected to Clipline Cloud.
+
+The header includes actions for:
+
+- Uploading to Clipline Cloud when connected.
+- Opening the containing folder in Explorer.
+- Copying the clip to the clipboard.
+- Deleting the local clip.
+- Renaming the local clip.
+
+## Timeline
+
+The timeline shows the current playhead, trim selection, markers, osu! play blocks, and a navigator
+for zooming and panning. Marker and game-event presentation depends on the game profile that created
+the clip.
+
+Common controls:
+
+| Action | Control |
+|---|---|
+| Play or pause | `Space` or `K` |
+| Jump back or forward | `J` / `L` or arrow controls |
+| Set trim in or out | `I` / `O` |
+| Previous or next marker | `Shift+M` / `M` |
+| Zoom | `+`, `-`, scroll, or the zoom buttons |
+| Toggle snapping | `S`; hold `Alt` to bypass while dragging |
+
+See [Keyboard shortcuts](/reference/keyboard-shortcuts) for the complete list.
+
+## Trim export
+
+1. Open the clip.
+2. Use the playhead and `I` / `O`, or drag the selection handles.
+3. Click the scissors **Clip** button.
+
+Exports are keyframe-aligned and stream-copied. That makes them fast and lossless, but the exported
+range can be slightly wider than the exact in/out points when the nearest keyframes sit outside the
+selection.
+
+Exports are written next to the source clip and appear in the Library as trims.
+
+## Audio track selection
+
+When a clip has multiple audio tracks, the review deck shows an **Audio tracks** checklist. Changing
+the selection affects local playback and upload/export preparation.
+
+Clipline tries a native Opus mixer first for Clipline-authored output-plus-mic previews. FFmpeg is
+used as a fallback when needed.
+
+## Game-specific review
+
+League clips can show a right-side **Match events** rail, champion/player context, and styled marker
+categories. osu! clips can show interval blocks and a **Set plays** rail. These views depend on the
+metadata available in the clip's sidecar files.

@@ -1,0 +1,56 @@
+---
+title: Compatibility
+sidebar_position: 1
+slug: /reference/compatibility
+---
+
+Clipline is nightly, testing-grade software. The matrix below separates what is verified live from
+what is implemented but still needs more hardware reports.
+
+## GPUs and encoders
+
+| GPU / encoder | Status | Notes |
+|---|---|---|
+| AMD RX 6700 XT, AMF H.264, SVT-AV1 | Verified live | Primary development rig. |
+| NVIDIA NVENC, H.264 / HEVC / AV1 | Implemented, not hardware-verified | Probe and argument paths exist; real NVIDIA reports are still useful. |
+| Intel QuickSync | Implemented, not hardware-verified | Code path exists; physical Intel validation is still needed. |
+| Software H.264 / HEVC | Not shipped | The bundled FFmpeg plan is LGPL-only, so it does not include GPL `libx264` or `libx265`. |
+
+Automatic encoder selection favors H.264 for review-player compatibility, then ranks usable hardware
+encoders. HEVC and AV1 are available when the machine and dependencies support them, but playback in
+the WebView can be limited by Windows codec support.
+
+## Windows versions
+
+| Version | Status | Notes |
+|---|---|---|
+| Windows 11 | Supported | WebView2 is usually present. WGC border suppression is available. |
+| Windows 10, build 20348 or newer | Supported | WGC border suppression and documented per-application audio loopback are available. |
+| Windows 10, 1803 through pre-20348 | Minimum supported | WGC exists, but the yellow capture border may be visible and process audio capture can fall back. |
+| Windows before 10 1803, 32-bit Windows, Linux, macOS | Unsupported | Clipline is Windows 10/11 x64 only. |
+
+## Games
+
+| Game | Capture / recording | Automatic review data |
+|---|---|---|
+| League of Legends | Verified | Built-in profile with Live Client Data API markers. |
+| osu! | Supported profile | Full-session-focused recording with submitted play enrichment when configured. |
+| Custom Win32 games | Supported capture path | Recordable, but no automatic game markers. |
+| VALORANT, CS2, Apex, TFT, others | Records when capturable | Dedicated adapters are future work. |
+
+## Performance expectations
+
+Hardware capture and encode are cheap, not free. Budget a small performance cost, often in the low
+single digits, and re-test on your hardware. Output resolution, FPS, codec, bitrate preset, and game
+load all matter.
+
+## Help fill the matrix
+
+Useful reports include:
+
+- GPU model and driver version.
+- Windows edition and build number from `winver`.
+- Encoder Clipline selected.
+- Game and capture mode.
+- Whether review playback, markers, audio, and export worked.
+- Relevant logs from `%APPDATA%\Clipline\clipline.log`.

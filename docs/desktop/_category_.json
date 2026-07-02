@@ -1,0 +1,9 @@
+{
+  "label": "Desktop App",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "Desktop App",
+    "description": "Install, configure, record, review, trim, and upload clips with the Clipline Windows app."
+  }
+}

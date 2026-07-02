@@ -61,7 +61,12 @@ const config: Config = {
         },
         {
           href: 'https://github.com/dain98/clipline-docs',
-          label: 'GitHub',
+          label: 'Docs GitHub',
+          position: 'right',
+        },
+        {
+          href: 'https://github.com/dain98/clipline',
+          label: 'Clipline GitHub',
           position: 'right',
         },
       ],
@@ -77,8 +82,20 @@ const config: Config = {
               to: '/',
             },
             {
-              label: 'Local development',
-              to: '/local-development',
+              label: 'Install',
+              to: '/desktop/install',
+            },
+            {
+              label: 'Recording',
+              to: '/desktop/recording',
+            },
+            {
+              label: 'Review and trim',
+              to: '/desktop/review-and-trim',
+            },
+            {
+              label: 'Compatibility',
+              to: '/reference/compatibility',
             },
             {
               label: 'Clipline Cloud Railway',
@@ -89,8 +106,8 @@ const config: Config = {
               to: '/clipline-cloud/self-hosting',
             },
             {
-              label: 'GitHub Pages',
-              to: '/github-pages',
+              label: 'Developers',
+              to: '/developers/local-development',
             },
           ],
         },
@@ -98,7 +115,11 @@ const config: Config = {
           title: 'Project',
           items: [
             {
-              label: 'Repository',
+              label: 'Clipline repository',
+              href: 'https://github.com/dain98/clipline',
+            },
+            {
+              label: 'Docs repository',
               href: 'https://github.com/dain98/clipline-docs',
             },
           ],

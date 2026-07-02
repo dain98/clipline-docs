@@ -1,0 +1,45 @@
+---
+title: Cloud Uploads
+sidebar_position: 8
+slug: /desktop/cloud-uploads
+---
+
+Clipline works without an account or server. Clipline Cloud is optional: connect it only when you
+want a web library, public share pages, private links, or cloud-hosted playback.
+
+## Connect to a Cloud host
+
+1. Deploy or choose a Clipline Cloud host.
+2. Open **Settings > Cloud** in the desktop app.
+3. Enter the host URL, username, and password.
+4. Click **Connect**.
+
+Use HTTPS for real installs. The app warns when a host uses plain HTTP because the password is sent
+without TLS.
+
+Deployment guides:
+
+- [Deploy Clipline Cloud on Railway](/clipline-cloud/railway)
+- [Self-host Clipline Cloud](/clipline-cloud/self-hosting)
+
+## Upload a clip
+
+1. Open a local clip in the Library.
+2. Click the upload button in the review header or use the clip context menu.
+3. Enter a title and optional description.
+4. Choose Private, Unlisted, or Public visibility.
+5. Choose audio tracks when the clip has multiple tracks.
+6. Click **Upload**.
+
+After upload, the Library can show the Cloud tab and cloud status for local clips. Cloud-only rows can
+download a cache copy for local review playback.
+
+## Delete local after upload
+
+Enable **Delete local after upload** only if you are comfortable treating Cloud as the durable copy.
+When enabled, Clipline removes the local MP4 and marker sidecar after the cloud copy is ready.
+
+## Automatic uploads
+
+Manual uploads are available now. Automatic upload rules are present in the UI as a disabled future
+surface.

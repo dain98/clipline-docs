@@ -1,0 +1,9 @@
+{
+  "label": "Developers",
+  "position": 50,
+  "link": {
+    "type": "generated-index",
+    "title": "Developers",
+    "description": "Build Clipline from source and maintain this docs site."
+  }
+}

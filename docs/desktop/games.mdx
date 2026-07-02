@@ -1,0 +1,56 @@
+---
+title: Games and Markers
+sidebar_position: 6
+slug: /desktop/games
+---
+
+Clipline's supported-game profiles use normal Windows window/process metadata to detect games. They
+do not inject into the game, install hooks, read memory, or use kernel drivers.
+
+## Supported game profiles
+
+| Game | Recording | Review data |
+|---|---|---|
+| League of Legends | Enabled by default, full-session by default. Matches the in-game `League of Legends.exe` window. | Live Client Data API markers, match event rail, player/champion summary, objective and structure events. |
+| osu! | Enabled by default, full-session focused. Matches real `osu!.exe` play windows and rejects updater-like windows. | Set play intervals from submitted osu!standard scores when osu! API credentials are configured. |
+
+## League of Legends
+
+League support uses the official local Live Client Data API on `127.0.0.1:2999` while you are in a
+match. It can add events such as champion kills, assists, deaths, dragons, barons, turrets, and other
+match context to the clip sidecar.
+
+In review, League clips can show:
+
+- Timeline markers.
+- A right-side Match events rail.
+- Champion portrait, summoner spells, KDA, CS/min, and item build when available.
+- Gallery summaries for full sessions.
+
+League support does not use Riot account credentials.
+
+## osu!
+
+osu! support records full-session-focused clips and can enrich saved sessions with submitted
+osu!standard plays. In review, those plays appear as timeline interval blocks and in the **Set
+plays** rail.
+
+To fetch submitted plays, configure osu! API credentials in the osu! game settings. The desktop
+stores credential metadata in settings, keeps the client secret out of `settings.json`, and retries
+pending enrichment during startup and library refresh.
+
+Short osu!-tagged full sessions under ten seconds are discarded as likely boot or updater transients.
+
+## Custom games
+
+Use **Settings > Games > Add Custom Game** to register a visible window. Clipline stores the process
+path, executable name, title metadata, and recording mode.
+
+Custom games can record replays or full sessions, but they do not get automatic game markers unless
+a future built-in profile adds an event source.
+
+## Planned adapters
+
+Future game work is expected to stay inside the same no-injection boundary. CS2 Game State
+Integration is a clean candidate because it is official. VALORANT likely needs kill-feed OCR over
+Clipline's own captured frames unless Riot exposes a safe real-time local event source.

@@ -6,22 +6,32 @@ sidebar_label: Overview
 sidebar_position: 1
 ---
 
-Clipline documentation lives in this repository and is published as a static Docusaurus site.
+Clipline is a lightweight, open-source game recorder for Windows. It records with a
+no-injection capture path, keeps clips local by default, and adds useful timeline context such as
+League of Legends match events and osu! set plays.
 
-## What is here
+This documentation is split into three parts:
 
-- Markdown and MDX documentation under `docs/`
-- Clipline Cloud Railway and self-hosting notes
-- Docusaurus site configuration in `docusaurus.config.ts`
-- Sidebar generation in `sidebars.ts`
-- GitHub Pages deployment through GitHub Actions
+- **Desktop app**: install Clipline, record replays and sessions, review clips, trim, export,
+  configure games, audio, storage, hotkeys, and optional Cloud uploads.
+- **Reference**: compatibility, privacy and anti-cheat notes, troubleshooting, and keyboard
+  shortcuts.
+- **Clipline Cloud**: deployment guides for hosting the optional web library and sharing service.
 
-## Published site
+## Start here
 
-The production site is configured for:
+- [Install Clipline](/desktop/install)
+- [First run](/desktop/first-run)
+- [Recording replays and sessions](/desktop/recording)
+- [Review, trim, and export clips](/desktop/review-and-trim)
+- [Supported games and markers](/desktop/games)
 
-```text
-https://dain98.github.io/clipline-docs/
-```
+## Current status
 
-After GitHub Pages is enabled for this repository, pushes to `main` build and publish the site automatically.
+Clipline is nightly, testing-grade software. It is useful today as a tray recorder with replay
+saves, full-session game recording, a local library, a first-party review player, lossless
+keyframe-aligned trimming, multi-source audio, League match markers, osu! play blocks, and optional
+Clipline Cloud upload support.
+
+The Windows installer is not Authenticode-signed yet, so Windows SmartScreen can warn on first run.
+The in-app updater is separately signed and checks update bundle signatures before installing.

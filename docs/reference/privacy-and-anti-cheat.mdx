@@ -1,0 +1,42 @@
+---
+title: Privacy and Anti-Cheat
+sidebar_position: 2
+slug: /reference/privacy-and-anti-cheat
+---
+
+Clipline's core safety boundary is simple: it does not inject DLLs, install a kernel driver, hook the
+game process, or read game memory.
+
+## Capture model
+
+Clipline records through Windows capture APIs and normal Windows window/process metadata. Event data
+comes from safe sources such as:
+
+- League of Legends' official local Live Client Data API.
+- osu! public score data when you configure osu! API credentials.
+- Clipline's own saved marker sidecars.
+
+This design avoids the injected-capture pattern that many anti-cheat systems are sensitive to.
+
+## What this does not guarantee
+
+No app can guarantee future anti-cheat policy. Clipline controls its own behavior, not whether a
+game vendor permits desktop-compositor capture on every patch and configuration.
+
+Use borderless windowed modes when possible. Exclusive fullscreen can force display capture instead
+of per-window capture.
+
+## Local-first defaults
+
+Clipline does not require an account for local recording and review. Clips stay on your machine
+unless you explicitly upload them to a Clipline Cloud host.
+
+Mic capture is opt-in. Cloud uploads are manual today.
+
+## Capture hygiene
+
+Display capture records everything visible on the selected monitor. Prefer game or window capture
+when possible, and be aware of private notifications, chats, password managers, browser tabs, and
+overlays.
+
+If a clip might contain private content, delete it locally before uploading or sharing.

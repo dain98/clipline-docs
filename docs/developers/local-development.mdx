@@ -1,0 +1,59 @@
+---
+id: local-development
+title: Build Clipline from Source
+sidebar_label: Local Development
+sidebar_position: 1
+slug: /developers/local-development
+---
+
+These commands build the desktop app from the main Clipline repository, not this docs repository.
+
+## Requirements
+
+- Windows 10 or Windows 11, x64.
+- Rust stable with `cargo` and `clippy`.
+- Microsoft Edge WebView2 Runtime.
+- Optional: FFmpeg and ffprobe on `PATH` for HEVC/AV1 and the full media test suite.
+
+## Clone and run
+
+```powershell
+git clone https://github.com/dain98/clipline.git
+cd clipline
+cargo run -p clipline-app
+```
+
+That launches the tray app. Settings persist under `%APPDATA%\Clipline\settings.json`.
+
+## Useful commands
+
+```powershell
+cargo test --workspace
+cargo clippy --workspace --all-targets -- -D warnings
+```
+
+Device tests for WGC, MFT, and WASAPI self-skip on CI runners without hardware and run live on a
+real Windows machine.
+
+## Optional app flags
+
+| Flag | Effect |
+|---|---|
+| `--window <title substring>` | Capture a single window instead of the primary monitor. |
+| `--disk-quota-gb <n>` | Override the saved storage quota for this launch; `0` disables GC. |
+| `--lol-url <url>` | Point the League marker poller at a mock server. |
+
+## Project layout
+
+| Path | Purpose |
+|---|---|
+| `crates/clipline-capture` | Windows capture, audio capture, encoders, FFmpeg subprocess path, A/V timing. |
+| `crates/clipline-mp4` | Hybrid MP4 muxer, codec metadata, multi-track media, keyframe trim. |
+| `crates/clipline-buffer` | Replay ring and save-window extraction. |
+| `crates/clipline-storage` | Clip inventory, sidecar-aware quota accounting, cleanup. |
+| `crates/clipline-events` | Marker schema and game-clock mapping. |
+| `crates/clipline-lol` | League Live Client adapter. |
+| `apps/clipline-app` | Tauri desktop shell, settings, library, review player, game profiles, Cloud integration. |
+
+The source-of-truth design doc is `ddoc.md` in the main repository. Current implementation notes live
+in `handoff.md`.

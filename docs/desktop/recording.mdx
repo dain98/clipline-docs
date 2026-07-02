@@ -1,0 +1,66 @@
+---
+title: Recording
+sidebar_position: 3
+slug: /desktop/recording
+---
+
+Clipline records in two complementary ways:
+
+- **Replay saves**: the recorder keeps a rolling buffer and saves the most recent footage when you
+  press the Save Replay hotkey.
+- **Full-session recording**: supported game profiles or custom games can save a whole session while
+  the game window is active.
+
+Both paths share one recorder pipeline so Save Replay can keep working during a full session.
+
+## Save Replay
+
+The default global hotkey is `Alt+F10`. You can also click **Save Replay** in the app rail.
+
+Set the saved replay length in **Settings > Recording > Save length**. The current range is 5 seconds
+to 2 minutes, with 30 second, 1 minute, and 2 minute presets.
+
+Clipline keeps the rolling buffer internally, then writes a standard MP4 when you save. The clip
+appears in the Library after the save finishes.
+
+## Full-session recording
+
+Full-session recording is configured per supported game or custom game in **Settings > Games**. When
+the matching game window appears, Clipline switches capture to that window and records until the
+window disappears, the target changes, recording stops, or the app exits cleanly.
+
+Full sessions are finalized as `session_<unix>.mp4` and labeled as sessions in the Library. In
+progress recordings use a temporary `.mp4.recording` suffix so the Library does not try to open an
+unfinished file.
+
+## Capture target
+
+Clipline prefers game or window capture when it can identify the target. You can also configure a
+display or display region in **Settings > Capture**.
+
+Display capture records whatever is visible on that monitor. Use game or window capture when you
+want to reduce the chance of recording private notifications, password managers, or other desktop
+content.
+
+## Recording quality
+
+Use **Settings > Recording** to choose:
+
+| Setting | What it controls |
+|---|---|
+| Encoder | Backend and codec for new recordings. Automatic favors playable H.264. |
+| Output size | Resolution cap while preserving aspect ratio. |
+| Save length | How much recent footage Save Replay writes. |
+| Video quality | Compact, Balanced, Sharp, or Maximum. |
+| Smoothness | 30, 60, 90, or 120 FPS. |
+
+HEVC and AV1 can be useful for local storage efficiency, but WebView2 playback support is more
+limited. Automatic avoids codecs the review player cannot decode.
+
+## Storage quota
+
+The saved clip quota lives in **Settings > Storage**. Clipline cleans oldest clips after a save,
+protecting the clip that was just written. Set the quota to `0` to disable cleanup.
+
+The advanced disk replay buffer writes rolling replay cache files continuously. Leave it off unless
+you specifically need it and accept the extra SSD write load.

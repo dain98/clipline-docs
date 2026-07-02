@@ -1,0 +1,41 @@
+---
+title: First Run
+sidebar_position: 2
+slug: /desktop/first-run
+---
+
+Clipline opens as a small desktop app and can keep running in the tray. The recording service starts
+with the current settings, and the default global save hotkey is `Alt+F10`.
+
+## Where files live
+
+By default, Clipline writes:
+
+| Data | Location |
+|---|---|
+| Settings | `%APPDATA%\Clipline\settings.json` |
+| Logs | `%APPDATA%\Clipline\clipline.log` |
+| Clips | `Videos\Clipline\` |
+| Audio preview cache | `%APPDATA%\Clipline\audio-previews` |
+| Cloud cache | `%APPDATA%\Clipline\cloud-cache` |
+
+Change the media folder in **Settings > Storage**. Existing clips stay in the old folder and will
+not appear in the local library after you switch roots.
+
+## What the main screen shows
+
+- **Library**: local clips, cloud clips when connected, filters, grouping, sorting, and search.
+- **Rail controls**: recording status, Save Replay, clip count, Cloud profile, and Settings.
+- **Review player**: opens when you select a clip, with playback controls, timeline markers, trim,
+  audio track selection, upload, rename, Explorer, copy, and delete actions.
+
+## Recommended first test
+
+1. Leave the default settings in place.
+2. Open a game or any visible app window.
+3. Press `Alt+F10` or click **Save Replay**.
+4. Open the saved clip from the Library.
+5. Play it back and confirm video, audio, and duration look right.
+
+After that, tune **Settings > Recording**, **Capture**, **Audio**, **Games**, and **Hotkeys** for your
+setup.

@@ -1,0 +1,46 @@
+---
+title: Audio
+sidebar_position: 7
+slug: /desktop/audio
+---
+
+Clipline records output audio and microphone audio through Windows audio capture APIs. Microphone
+capture is opt-in.
+
+## Output audio
+
+Output audio is enabled by default. Depending on the Windows build and settings, Clipline can record
+mixed system output or split output by current Windows render-session process.
+
+When process-loopback tracks are available, the review player and upload dialog show an audio track
+checklist so you can choose which tracks to hear or share.
+
+## Microphone
+
+Enable microphone capture in **Settings > Capture**. You can select a device, set gain, and choose
+mono handling.
+
+The Test mic control plays the selected input through Web Audio and shows a live level meter. Use it
+before a long recording session.
+
+## Multi-track clips
+
+Fresh clips can carry track metadata in their marker sidecars. The review player uses that metadata
+to:
+
+- Show track labels.
+- Select which tracks should play.
+- Prepare selected-track uploads.
+- Create local preview mixes when the WebView cannot play the exact track set directly.
+
+If only one audio source is active, Clipline writes the normal single Opus audio path.
+
+## Troubleshooting audio
+
+If a clip is silent or missing one source:
+
+1. Check **Settings > Capture** and confirm the source is enabled.
+2. Use the mic test for microphone input.
+3. Open the clip and expand **Audio tracks** in the review deck.
+4. Try selecting all tracks.
+5. If preview generation fails, install or configure FFmpeg and try again.

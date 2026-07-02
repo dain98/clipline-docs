@@ -1,0 +1,50 @@
+---
+title: Install Clipline
+sidebar_label: Install
+sidebar_position: 1
+slug: /desktop/install
+---
+
+Clipline ships as a Windows nightly installer. Nightly builds are the only public channel today.
+
+## Requirements
+
+- Windows 10 or Windows 11, x64.
+- Microsoft Edge WebView2 Runtime. Windows 11 usually includes it. The installer can use
+  Microsoft's Evergreen bootstrapper when WebView2 is missing or too old.
+- A GPU and driver that can expose a usable video encoder. H.264 is the compatibility-first path.
+- Optional: FFmpeg if you want HEVC or AV1 recording, or if you need fallback media tooling.
+
+See [Compatibility](/reference/compatibility) for the current hardware and Windows matrix.
+
+## Download
+
+1. Open the [Clipline releases page](https://github.com/dain98/clipline/releases).
+2. Download the latest `Clipline_<version>_x64-setup.exe` from the nightly release.
+3. Run the installer.
+
+Clipline installs per user and starts as a tray app.
+
+## SmartScreen warning
+
+The installer binary is not Authenticode-signed yet. Windows SmartScreen may warn the first time you
+run it. Choose **More info** and then **Run anyway** if you trust the build you downloaded from the
+Clipline GitHub release.
+
+This is separate from the updater signature. Clipline's updater checks a signed update manifest and
+bundle signature before applying updates.
+
+## Updates
+
+The desktop app checks the nightly updater endpoint:
+
+```text
+https://github.com/dain98/clipline/releases/download/nightly/latest.json
+```
+
+When an update is available, Clipline shows an update dialog. Choose **Install Update** to apply it,
+or **Not Now** to keep the current build for that session.
+
+## Build from source
+
+For development builds, use the [local development guide](/developers/local-development).

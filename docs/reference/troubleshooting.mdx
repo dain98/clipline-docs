@@ -1,0 +1,75 @@
+---
+title: Troubleshooting
+sidebar_position: 3
+slug: /reference/troubleshooting
+---
+
+Start with the log file:
+
+```text
+%APPDATA%\Clipline\clipline.log
+```
+
+For hardware and platform questions, include the log with your GPU, Windows build, encoder, game,
+and capture mode.
+
+## SmartScreen blocks the installer
+
+The installer is not Authenticode-signed yet. If you downloaded it from the official GitHub release
+and trust that source, choose **More info** and **Run anyway**.
+
+## WebView2 warning on launch
+
+Install or repair Microsoft Edge WebView2 Runtime, then reopen Clipline. Windows 11 usually includes
+WebView2, but older or stripped Windows installs may need repair.
+
+## Save Replay does nothing
+
+- Confirm the rail status says recording is active.
+- Try clicking **Save Replay** in the app instead of using the hotkey.
+- Rebind the hotkey in **Settings > Hotkeys**.
+- If the game suppresses registered global shortcuts, try a mouse hotkey or a modified keyboard
+  hotkey.
+
+## The wrong thing is recorded
+
+- Prefer supported-game or custom-game capture over display capture.
+- In **Settings > Capture**, confirm the selected display or display region.
+- For borderless games, make sure the game window is visible and not minimized.
+- For exclusive fullscreen games, switch to borderless fullscreen when possible.
+
+## The clip has no audio
+
+- Check **Settings > Capture** and confirm output audio or microphone capture is enabled.
+- Use the mic test for microphone input.
+- Open the clip in review and expand **Audio tracks**.
+- Select all tracks and try playback again.
+- Install or configure FFmpeg if preview mixing fails.
+
+## HEVC or AV1 clips do not play in-app
+
+WebView2 does not reliably decode HEVC or AV1 without OS codec support. Use H.264 for maximum
+in-app compatibility, or open HEVC/AV1 clips in an external player until native preview support
+lands.
+
+## League markers are missing
+
+- Start recording while already in a real match or wait for the match window to be detected.
+- Confirm League support is enabled in **Settings > Games**.
+- League markers require the local Live Client Data API to be available during the match.
+- Older clips may contain less marker data than fresh clips.
+
+## osu! set plays are missing
+
+- Confirm osu! support is enabled in **Settings > Games**.
+- Add osu! API credentials in the osu! game settings.
+- The play mapper needs submitted osu!standard scores with an `ended_at` timestamp.
+- Pending enrichment retries on startup and library refresh.
+
+## Cloud upload fails
+
+- Check the Cloud host `/readyz` route.
+- Confirm the desktop app is connected in **Settings > Cloud**.
+- Use HTTPS for real deployments.
+- Try a small clip first.
+- If a selected-track upload fails, try uploading with all audio tracks selected.

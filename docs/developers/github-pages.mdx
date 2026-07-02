@@ -1,0 +1,56 @@
+---
+id: github-pages
+title: Docs Site
+sidebar_label: GitHub Pages
+sidebar_position: 2
+slug: /developers/github-pages
+---
+
+This documentation site lives in `dain98/clipline-docs`. It is built with Docusaurus and published
+through GitHub Pages project hosting at `/clipline-docs/`.
+
+## Local docs development
+
+```bash
+npm install
+npm start
+```
+
+Build the static site:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run serve
+```
+
+## Repository settings
+
+In GitHub, open **Settings > Pages** for `dain98/clipline-docs` and set **Build and deployment > Source** to **GitHub Actions**.
+
+## Automatic deployment
+
+The deployment workflow runs on pushes to `main` and can also be started manually from the Actions tab.
+
+```text
+.github/workflows/deploy.yml
+```
+
+Pull requests run a build-only workflow:
+
+```text
+.github/workflows/test-deploy.yml
+```
+
+## Manual deployment alternative
+
+Docusaurus still includes the standard deploy command if you intentionally want to publish to the
+`gh-pages` branch manually. The repository's normal path is the workflow above.
+
+```bash
+GIT_USER=dain98 npm run deploy
+```

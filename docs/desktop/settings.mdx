@@ -1,0 +1,65 @@
+---
+title: Settings
+sidebar_position: 5
+slug: /desktop/settings
+---
+
+Open Settings from the app rail. The page is tabbed by area and applies changes when you click
+**Save Settings**.
+
+Some changes restart the recorder service so new recordings use the updated configuration. Stopping
+recording intentionally clears the rolling replay buffer.
+
+## General
+
+| Setting | Purpose |
+|---|---|
+| Open on startup | Launch Clipline automatically when you sign in to Windows. |
+| Close to Tray | Keep Clipline running when the window closes. |
+| Legacy timeline editor | Use the older detailed timeline instead of the newer simplified review deck. |
+
+## Capture
+
+Capture settings choose what Clipline records. The app can use display capture, display regions, and
+detected game windows.
+
+Display regions use a virtual desktop map plus numeric pixel fields. Region capture is single
+display only; stitched multi-monitor regions are out of scope.
+
+## Recording
+
+Recording settings choose the encoder, output size, replay save length, video quality, and FPS. The
+automatic encoder path favors playable H.264 before more storage-efficient codecs.
+
+## Games
+
+The Games tab manages supported first-party game profiles and custom games. Supported games can be
+enabled or disabled, set to Replay-only or Full-session mode, and configured for game-specific review
+presentation.
+
+## Storage
+
+Storage controls the media folder and saved clip quota. Advanced disk replay buffer settings are also
+here.
+
+The disk replay buffer is not needed for normal use. It continuously writes temporary replay cache
+files, so the UI asks for an explicit acknowledgement before enabling it.
+
+## Cloud
+
+Cloud settings connect the desktop app to a Clipline Cloud host. Once connected, the Library gains a
+Cloud tab and local clips can be uploaded with title, description, visibility, and audio-track
+selection.
+
+Use [Clipline Cloud on Railway](/clipline-cloud/railway) or [self-hosting](/clipline-cloud/self-hosting)
+to create a Cloud host.
+
+## Hotkeys
+
+The Save Replay hotkey recorder accepts:
+
+- F1-F11 or F13-F24.
+- Middle mouse, Mouse4, or Mouse5.
+- Ctrl, Alt, and Shift modifiers with supported keyboard keys.
+
+F12 is reserved because it commonly opens developer tools.

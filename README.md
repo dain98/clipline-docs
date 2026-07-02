@@ -17,8 +17,10 @@ npm run build
 
 ## Docs
 
-- `docs/clipline-cloud/railway.mdx` covers the easiest Railway deployment path.
-- `docs/clipline-cloud/self-hosting.mdx` covers the public Clipline Cloud self-hosting path.
+- `docs/desktop/` covers the Clipline Windows app.
+- `docs/reference/` covers compatibility, privacy, troubleshooting, and shortcuts.
+- `docs/clipline-cloud/` covers Railway and self-hosted Clipline Cloud deployments.
+- `docs/developers/` covers source builds and docs-site maintenance.
 
 ## GitHub Pages
 
