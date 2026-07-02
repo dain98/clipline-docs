@@ -80,6 +80,10 @@ const config: Config = {
               to: '/local-development',
             },
             {
+              label: 'Clipline Cloud Railway',
+              to: '/clipline-cloud/railway',
+            },
+            {
               label: 'Clipline Cloud self hosting',
               to: '/clipline-cloud/self-hosting',
             },

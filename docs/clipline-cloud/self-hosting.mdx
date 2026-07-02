@@ -1,13 +1,16 @@
 ---
 title: Self Hosting Clipline Cloud
 sidebar_label: Self Hosting
-sidebar_position: 1
+sidebar_position: 2
 slug: /clipline-cloud/self-hosting
 ---
 
 Clipline Cloud is the self-hosted server for the Clipline desktop app. It stores clip metadata in
 SQLite or Postgres, stores media on local disk or an S3-compatible bucket, and serves a web UI for
 managing and sharing clips.
+
+For the easiest managed setup, start with the [Railway guide](/clipline-cloud/railway). This page is
+for Docker Compose, VPS, and lower-level self-hosting setups.
 
 The current release is
 [`v1.2.24`](https://github.com/dain98/clipline-cloud/releases/tag/v1.2.24), published as:
@@ -16,12 +19,15 @@ The current release is
 ghcr.io/dain98/clipline-cloud:1.2.24
 ```
 
-Pin a released image tag in production. Do not run `latest`.
+For production change control, prefer pinning `CLIPLINE_IMAGE` to a released tag such as
+`ghcr.io/dain98/clipline-cloud:1.2.24` so upgrades and rollbacks are deliberate. `latest` is fine
+for local testing or intentionally auto-updating installs.
 
 ## Choose a deployment shape
 
 | Setup | Database | Media storage | Use when |
 |-------|----------|---------------|----------|
+| Railway template | Postgres | Railway Object Storage | You want the easiest hosted setup. |
 | Standalone Compose | SQLite | Local disk | You want the simplest single-host deployment. |
 | Existing reverse proxy | SQLite or Postgres | Local disk or S3 | You already run Nginx Proxy Manager, Caddy, Traefik, or another HTTPS proxy. |
 | Caddy profile | SQLite | Local disk | You want Clipline Cloud's bundled Caddy profile to manage HTTPS. |
@@ -209,6 +215,7 @@ Keep the previous image tag available until the new release is verified.
 
 ## More detail
 
+- [Railway guide](/clipline-cloud/railway)
 - [Clipline Cloud repository](https://github.com/dain98/clipline-cloud)
 - [Full deployment guide](https://github.com/dain98/clipline-cloud/blob/main/docs/cloud/deployment-guide.md)
 - [Deployment operations runbook](https://github.com/dain98/clipline-cloud/blob/main/docs/cloud/deployment-operations.md)
