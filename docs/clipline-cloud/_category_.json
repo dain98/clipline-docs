@@ -1,0 +1,9 @@
+{
+  "label": "Clipline Cloud",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "title": "Clipline Cloud",
+    "description": "Deployment and operations notes for self-hosting Clipline Cloud."
+  }
+}

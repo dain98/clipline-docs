@@ -15,6 +15,10 @@ npm start
 npm run build
 ```
 
+## Docs
+
+- `docs/clipline-cloud/self-hosting.mdx` covers the public Clipline Cloud self-hosting path.
+
 ## GitHub Pages
 
 The site is configured for:

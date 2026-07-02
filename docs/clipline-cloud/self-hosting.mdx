@@ -1,0 +1,215 @@
+---
+title: Self Hosting Clipline Cloud
+sidebar_label: Self Hosting
+sidebar_position: 1
+slug: /clipline-cloud/self-hosting
+---
+
+Clipline Cloud is the self-hosted server for the Clipline desktop app. It stores clip metadata in
+SQLite or Postgres, stores media on local disk or an S3-compatible bucket, and serves a web UI for
+managing and sharing clips.
+
+The current release is
+[`v1.2.24`](https://github.com/dain98/clipline-cloud/releases/tag/v1.2.24), published as:
+
+```text
+ghcr.io/dain98/clipline-cloud:1.2.24
+```
+
+Pin a released image tag in production. Do not run `latest`.
+
+## Choose a deployment shape
+
+| Setup | Database | Media storage | Use when |
+|-------|----------|---------------|----------|
+| Standalone Compose | SQLite | Local disk | You want the simplest single-host deployment. |
+| Existing reverse proxy | SQLite or Postgres | Local disk or S3 | You already run Nginx Proxy Manager, Caddy, Traefik, or another HTTPS proxy. |
+| Caddy profile | SQLite | Local disk | You want Clipline Cloud's bundled Caddy profile to manage HTTPS. |
+| Postgres profile | Postgres | Local disk | You want a stronger production database or a split web/worker setup. |
+| External S3 profile | SQLite | S3-compatible bucket | You want media outside the host disk. |
+
+:::caution
+The bundled MinIO profile is for local S3 testing only. Use a real private S3-compatible bucket for
+production object storage.
+:::
+
+## Requirements
+
+- Docker with Compose v2, using `docker compose`.
+- A public HTTPS URL for real use.
+- A stable session secret that survives restarts.
+- Durable storage for both the database and media.
+- A backup plan that captures the database and media from the same point in time.
+
+The app listens on port `8080` inside the container. Set `CLIPLINE_PUBLIC_URL` to the URL users and
+the desktop app will connect to, such as `https://clips.example.com`.
+
+Non-local `http://` URLs are rejected unless you intentionally set
+`CLIPLINE_ALLOW_INSECURE_PUBLIC_URL=true` for development or a trusted LAN.
+
+## Simple single-host install
+
+Use the standalone Compose file when you want a no-clone deployment under a directory such as
+`/opt/cl-cloud`.
+
+```sh
+sudo mkdir -p /opt/cl-cloud /mnt/core/cldata
+cd /opt/cl-cloud
+
+sudo ln -s /mnt/core/cldata data
+sudo mkdir -p secrets
+openssl rand -base64 32 | sudo tee secrets/session_secret.txt >/dev/null
+
+sudo chmod 700 secrets
+sudo chown 10001:10001 secrets/session_secret.txt
+sudo chmod 400 secrets/session_secret.txt
+sudo chown -R 10001:10001 /mnt/core/cldata
+
+curl -fsSLo docker-compose.yml \
+  https://raw.githubusercontent.com/dain98/clipline-cloud/main/deploy/compose/docker-compose.standalone.yml
+curl -fsSLo .env \
+  https://raw.githubusercontent.com/dain98/clipline-cloud/main/deploy/compose/standalone.env.example
+```
+
+Edit `.env` before first start:
+
+```env
+CLIPLINE_IMAGE=ghcr.io/dain98/clipline-cloud:1.2.24
+CLIPLINE_PUBLIC_URL=https://clips.example.com
+CLIPLINE_HTTP_PORT=8080
+CLIPLINE_BOOTSTRAP_ADMIN_USERNAME=admin
+CLIPLINE_TRUSTED_PROXY_HOPS=
+CLIPLINE_VIDEO_OPTIMIZATION=off
+```
+
+Start the service:
+
+```sh
+docker compose up -d
+docker compose logs -f clipline-cloud
+```
+
+On first boot, Clipline Cloud creates the owner account and prints a one-time password:
+
+```text
+Clipline Cloud initialized.
+Initial owner user created: admin
+One-time password: <generated-password>
+Save this password now. It will not be shown again.
+```
+
+Open your public URL, sign in as `admin`, change the password, and create normal users.
+
+## HTTPS and reverse proxies
+
+For an existing proxy, forward traffic to the host port that maps to container port `8080`.
+
+```text
+Public URL: https://clips.example.com
+Proxy target: http://HOST_IP:8080
+```
+
+Keep `CLIPLINE_PUBLIC_URL` set to the public `https://` URL. If the proxy has a stable source IP and
+you want audit logs and rate limits to use real client IPs, set `CLIPLINE_TRUSTED_PROXY_HOPS` to the
+proxy IP address. Forwarded headers are ignored unless the socket peer is trusted.
+
+If you do not already have a proxy, use the bundled Caddy profile from a clone of the Cloud repo:
+
+```sh
+git clone https://github.com/dain98/clipline-cloud.git
+cd clipline-cloud/deploy/compose
+
+CLIPLINE_IMAGE=ghcr.io/dain98/clipline-cloud:1.2.24 \
+CLIPLINE_DOMAIN=clips.example.com \
+CLIPLINE_ACME_EMAIL=you@example.com \
+docker compose -f docker-compose.caddy.yml up -d
+```
+
+The Caddy profile binds host ports `80` and `443`, sets `CLIPLINE_PUBLIC_URL` to the HTTPS domain,
+and configures the trusted proxy hop for the app.
+
+## Database and storage choices
+
+SQLite plus local disk is the simplest single-host setup. It is fine for a small self-hosted install
+when the database file and media directory live on durable local storage.
+
+Use Postgres when you want a managed or more operationally robust metadata database, or when you plan
+to split web and worker containers. The Postgres profile expects secret files in
+`deploy/compose/secrets/`:
+
+```text
+postgres_password.txt
+database_url.txt
+admin_password.txt
+session_secret.txt
+```
+
+Use S3-compatible storage when media should live outside the host. The external S3 profile expects a
+private bucket and these secret files:
+
+```text
+s3_access_key_id.txt
+s3_secret_access_key.txt
+admin_password.txt
+session_secret.txt
+```
+
+Secret files read by the app container must be readable by UID `10001`.
+
+## Optional worker
+
+The default container role is `all`, which runs both the HTTP server and durable job runner. That is
+the recommended simple setup.
+
+To split jobs into a worker container, set the web container to `web` and enable the Compose
+`worker` profile:
+
+```sh
+CLIPLINE_IMAGE=ghcr.io/dain98/clipline-cloud:1.2.24 \
+CLIPLINE_WEB_PROCESS_ROLE=web \
+docker compose -f docker-compose.postgres.yml --profile worker up -d
+```
+
+Prefer Postgres for split-worker deployments. SQLite split mode should only be used when both
+containers share the same host-local Docker volume.
+
+## Verify the deployment
+
+After startup:
+
+1. Check readiness:
+
+   ```sh
+   curl -fsS https://clips.example.com/readyz
+   ```
+
+2. Log in as the owner and create a user.
+3. Connect the [Clipline desktop app](https://github.com/dain98/clipline) to the public URL.
+4. Upload a clip, confirm it appears in the library, and test private and public share links.
+
+## Backups and upgrades
+
+A complete backup includes the database and media from the same point in time.
+
+- SQLite plus local disk: stop the container first, or use SQLite's backup API, then archive the
+  data directory.
+- Postgres plus local disk: dump Postgres and archive the media volume from the same maintenance
+  window.
+- External S3: back up the database and enable bucket-level protection such as provider backups or
+  versioning.
+
+Before upgrading, back up first, change `CLIPLINE_IMAGE` to the new release tag, and recreate the
+container:
+
+```sh
+CLIPLINE_IMAGE=ghcr.io/dain98/clipline-cloud:<new-tag> docker compose up -d
+```
+
+Keep the previous image tag available until the new release is verified.
+
+## More detail
+
+- [Clipline Cloud repository](https://github.com/dain98/clipline-cloud)
+- [Full deployment guide](https://github.com/dain98/clipline-cloud/blob/main/docs/cloud/deployment-guide.md)
+- [Deployment operations runbook](https://github.com/dain98/clipline-cloud/blob/main/docs/cloud/deployment-operations.md)
+- [Latest release](https://github.com/dain98/clipline-cloud/releases/latest)
